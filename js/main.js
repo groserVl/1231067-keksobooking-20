@@ -1,6 +1,7 @@
 'use strict';
 
 // Константы
+var NUMBER_ADS = 8;
 var HIGHEST_Y = 630;
 var LOWEST_Y = 130;
 var LOWEST_X = 0;
@@ -19,8 +20,6 @@ var offsetWidth = document.querySelector('.map__pins').offsetWidth;
 var mapPins = document.querySelector('.map__pins');
 var template = document.querySelector('#pin').content.querySelector('.map__pin');
 
-var mockAds = [];
-
 // Временное скрытие класса
 document.querySelector('.map').classList.remove('map--faded');
 
@@ -36,9 +35,10 @@ var getRandomLength = function (arr) {
 };
 
 // Функция создания массива объявлений
-var creatMockAds = function (arr) {
-  for (var i = 0; i < 8; i++) {
-    arr.push(
+var creatMockAds = function (lengthArray) {
+  var mockAds = [];
+  for (var i = 0; i < lengthArray; i++) {
+    mockAds.push(
         {
           'author': {
             'avatar': 'img/avatars/user0' + (i + 1) + '.png'
@@ -62,8 +62,8 @@ var creatMockAds = function (arr) {
         }
     );
   }
+  return mockAds;
 };
-creatMockAds(mockAds);
 
 // Создаём дом элементы и переносим данные из массива
 var renderPins = function (pin) {
@@ -75,9 +75,12 @@ var renderPins = function (pin) {
   return pins;
 };
 
-var fragment = document.createDocumentFragment();
-for (var i = 0; i < mockAds.length; i++) {
-  fragment.appendChild(renderPins(mockAds[i]));
-}
+var renderAds = function (arr) {
+  var fragment = document.createDocumentFragment();
+  for (var i = 0; i < arr.length; i++) {
+    fragment.appendChild(renderPins(arr[i]));
+  }
+  mapPins.appendChild(fragment);
+};
 
-mapPins.appendChild(fragment);
+renderAds(creatMockAds(NUMBER_ADS));
