@@ -96,59 +96,57 @@ var renderAds = function (arr) {
 renderAds(creatMockAds(NUMBER_ADS));
 // ---------------------------------------------
 
-// Функция создающая карточку объявления
-var renderCards = function (arr) {
-  var cardElement = cardTemplate.cloneNode(true);
-  filtersContainer.before(cardElement);
+var cardElement = cardTemplate.cloneNode(true);
+filtersContainer.before(cardElement);
 
-  // Переменная в которой находится  варианты слов с различными окончаниями
+// Функция скрывающая определённый блок
+var getHidden = function (selector) {
+  cardElement.querySelector(selector).setAttribute('hidden', 'true');
+  return cardElement;
+};
+
+//  Функция создающая варианты слов с различными окончаниями
+var getNumberRooms = function (i) {
+  var a;
+  if (i === 1) {
+    a = ' комната для';
+  } else if (i > 1 && i <= 4) {
+    a = ' комнаты для';
+  } else {
+    a = ' комнат для';
+  }
+  return a;
+};
+
+// Функция создающая заново список удобств в арендованных объектах
+var getFeatures = function (content, features) {
+  content.innerHTML = '';
+  for (var i = 0; i < features.length; i++) {
+    var itemFeatures = document.createElement('li');
+    itemFeatures.classList.add('popup__feature', 'popup__feature--' + features[i]);
+
+    content.appendChild(itemFeatures);
+  }
+};
+
+// Функция создающая заново список фотографий
+var getPhotos = function (content, photos) {
+  content.innerHTML = '';
+  for (var i = 0; i < photos.length; i++) {
+    var itemPhotos = document.createElement('img');
+    itemPhotos.classList.add('popup__photo');
+    itemPhotos.src = photos[i];
+    itemPhotos.width = 45;
+    itemPhotos.height = 40;
+    itemPhotos.alt = 'Фотография жилья';
+    content.appendChild(itemPhotos);
+  }
+};
+
+// Функция создающая картачку объявления
+var renderCards = function (arr) {
   var numberGuests = arr.offer.guests === 1 ? ' гостя' : ' гостей';
 
-  // Функция скрывающая определённый блок
-  var getHidden = function (selector) {
-    cardElement.querySelector(selector).setAttribute('hidden', 'true');
-    return cardElement;
-  };
-
-  //  Функция создающая варианты слов с различными окончаниями
-  var getNumberRooms = function (i) {
-    var a;
-    if (i === 1) {
-      a = ' комната для';
-    } else if (i > 1 && i <= 4) {
-      a = ' комнаты для';
-    } else {
-      a = ' комнат для';
-    }
-    return a;
-  };
-
-  // Функция создающая заново список удобств в арендованных объектах
-  var getFeatures = function (content, features) {
-    content.innerHTML = '';
-    for (var i = 0; i < features.length; i++) {
-      var itemFeatures = document.createElement('li');
-      itemFeatures.classList.add('popup__feature', 'popup__feature--' + features[i]);
-
-      content.appendChild(itemFeatures);
-    }
-  };
-
-  // Функция создающая заново список фотографий
-  var getPhotos = function (content, photos) {
-    content.innerHTML = '';
-    for (var i = 0; i < photos.length; i++) {
-      var itemPhotos = document.createElement('img');
-      itemPhotos.classList.add('popup__photo');
-      itemPhotos.src = photos[i];
-      itemPhotos.width = 45;
-      itemPhotos.height = 40;
-      itemPhotos.alt = 'Фотография жилья';
-      content.appendChild(itemPhotos);
-    }
-  };
-
-  // Вносим изменения в карточку предложения из созданного объекта
   if (arr.offer.title) {
     cardElement.querySelector('.popup__title').textContent = arr.offer.title;
   } else {
@@ -204,9 +202,6 @@ var renderCards = function (arr) {
   }
 
   cardElement.querySelector('.popup__avatar').src = arr.author.avatar;
-
-  return cardElement;
-
 };
 
 renderCards(creatMockAds(NUMBER_ADS)[0]);
