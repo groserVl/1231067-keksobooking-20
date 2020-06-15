@@ -16,6 +16,10 @@ var CHEKING_TIME = ['12: 00', '13: 00', '14: 00'];
 var CHEKOUT_TIME = ['12: 00', '13: 00', '14: 00'];
 var FEATURES = ['wifi', 'dishwasher', 'parking', 'washer', 'elevator', 'conditioner'];
 var PHOTOS = ['http://o0.github.io/assets/images/tokyo/hotel1.jpg', 'http://o0.github.io/assets/images/tokyo/hotel2.jpg', 'http://o0.github.io/assets/images/tokyo/hotel3.jpg'];
+var MAP_PIN_X = 570;
+var MAP_PIN_Y = 375;
+var PIN_WIDTH = 62;
+var PIN_HEIGHT = 84;
 
 var offsetWidth = document.querySelector('.map__pins').offsetWidth;
 var mapPins = document.querySelector('.map__pins');
@@ -30,7 +34,7 @@ var translationTypes = {
   palace: 'Дворец'
 };
 // Временное скрытие класса
-document.querySelector('.map').classList.remove('map--faded');
+// document.querySelector('.map').classList.remove('map--faded');
 
 // Функция округления и генерации случайных чисел в диапазоне
 var getRandomNumber = function (min, max) {
@@ -205,3 +209,106 @@ var renderCards = function (arr) {
 };
 
 renderCards(creatMockAds(NUMBER_ADS)[0]);
+
+// ----------------------------------------------------
+var mapPinMain = document.querySelector('.map__pin--main');
+var map = document.querySelector('.map');
+var adForm = document.querySelector('.ad-form');
+var adFormHeader = document.querySelector('.ad-form-header');
+var adFormElement = document.querySelectorAll('.ad-form__element');
+var mapFilter = document.querySelectorAll('.map__filter');
+var mapFeatures = document.querySelector('.map__features');
+var inputAddressForm = adForm.querySelector('#address');
+var capacityForm = document.querySelector('#capacity');
+var roomNumberForm = document.querySelector('#room_number');
+
+// Отключение элементов формы
+var disabledElementsForms = function () {
+  adFormHeader.setAttribute('disabled', '');
+  mapFeatures.setAttribute('disabled', '');
+  for (var i = 0; i < adFormElement.length; i++) {
+    adFormElement[i].setAttribute('disabled', '');
+  }
+  for (var j = 0; j < mapFilter.length; j++) {
+    mapFilter[j].setAttribute('disabled', '');
+  }
+};
+disabledElementsForms();
+
+// Заполнение поле адреса в форме
+var getAddressForm = function () {
+  var x;
+  var y;
+  if ((map.classList.contains('map--faded'))) {
+    x = MAP_PIN_X + PIN_WIDTH / 2;
+    y = MAP_PIN_Y + PIN_WIDTH / 2;
+  } else {
+    x = MAP_PIN_X + PIN_WIDTH / 2;
+    y = MAP_PIN_Y + PIN_HEIGHT;
+  }
+  var locationXY = x + ' ' + y;
+  return locationXY;
+};
+inputAddressForm.value = getAddressForm();
+
+// Функция отменяющая неактивное состояния страницы и
+// ввод адреса в поле инпута формы
+var getActivePage = function () {
+  map.classList.remove('map--faded');
+  adForm.classList.remove('ad-form--disabled');
+  adFormHeader.removeAttribute('disabled', '');
+  mapFeatures.removeAttribute('disabled', '');
+  for (var i = 0; i < adFormElement.length; i++) {
+    adFormElement[i].removeAttribute('disabled', '');
+  }
+  for (var j = 0; j < mapFilter.length; j++) {
+    mapFilter[j].removeAttribute('disabled', '');
+  }
+  inputAddressForm.value = getAddressForm();
+};
+
+// Функция обработчик
+var onMapPinMousedown = function () {
+  getActivePage();
+};
+// Регистрация обработчика
+mapPinMain.addEventListener('mousedown', function (evt) {
+  if (evt.button === 0) {
+    onMapPinMousedown();
+  }
+});
+
+mapPinMain.addEventListener('keydown', function (evt) {
+  if (evt.key === 'Enter') {
+    onMapPinMousedown();
+  }
+});
+
+// Валидация соответствия комнат и гостей
+// Функция обработчик
+var onCapacityFormChange = function () {
+  var numberRooms = roomNumberForm.value;
+  var numberCapacity = capacityForm.value;
+  var visualizeInvalid = function () {
+    capacityForm.setCustomValidity('Невозможно выбрать этот вариант!!! Выберите другой');
+  };
+
+  if (numberRooms === '100' && numberCapacity !== '0') {
+    visualizeInvalid();
+    capacityForm.reportValidity();
+
+  } else if (numberRooms < numberCapacity) {
+    visualizeInvalid();
+    capacityForm.reportValidity();
+
+  } else if (numberCapacity === '0' && numberRooms !== '100') {
+    visualizeInvalid();
+    capacityForm.reportValidity();
+
+  } else {
+    capacityForm.setCustomValidity('');
+  }
+};
+
+capacityForm.addEventListener('change', onCapacityFormChange);
+
