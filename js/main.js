@@ -286,6 +286,7 @@ var disableCapacityElements = function () {
   for (var i = 0; i < capacityForm.children.length; i++) {
     capacityForm.children[i].disabled = true;
   }
+  capacityForm.children[2].disabled = false;
   capacityForm.children[2].selected = true;
 };
 // Функция сравнения гостей и комнат
