@@ -151,12 +151,6 @@ var renderCards = function (arr) {
   var popupClose = cardElement.querySelector('.popup__close');
   var numberGuests = arr.offer.guests === 1 ? ' гостя' : ' гостей';
 
-  // Функция скрывающая определённый блок
-  var getHidden = function (selector) {
-    cardElement.querySelector(selector).setAttribute('hidden', 'true');
-    return cardElement;
-  };
-
   cardElement.querySelector('.popup__title').textContent = arr.offer.title;
   cardElement.querySelector('.popup__text--address').textContent = arr.offer.address;
   cardElement.querySelector('.popup__text--price').textContent = arr.offer.price + ' ₽/ночь';
@@ -308,7 +302,6 @@ var onCapacityFormChange = function () {
         capacityForm.children[1].disabled = false;
         capacityForm.children[2].disabled = false;
         capacityForm.children[2].selected = true;
-        console.log(roomNumberForm.value);
         break;
       case '3':
         capacityForm.children[i].disabled = true;
@@ -321,7 +314,6 @@ var onCapacityFormChange = function () {
         capacityForm.children[i].disabled = true;
         capacityForm.children[3].disabled = false;
         capacityForm.children[3].selected = true;
-        console.log(roomNumberForm.value);
         break;
     }
   }
