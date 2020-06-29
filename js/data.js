@@ -34,6 +34,8 @@
   var creatMockAds = function (lengthArray) {
     var mockAds = [];
     for (var i = 0; i < lengthArray; i++) {
+      var locationX = getRandomNumber(LOWEST_X, offsetWidth);
+      var locationY = getRandomNumber(LOWEST_Y, HIGHEST_Y);
       mockAds.push(
           {
             'author': {
@@ -41,7 +43,7 @@
             },
             'offer': {
               'title': 'Заголовок предложения',
-              'address': getRandomNumber(LOWEST_X, offsetWidth) + ', ' + getRandomNumber(LOWEST_Y, HIGHEST_Y),
+              'address': locationX + ', ' + locationY,
               'price': getRandomNumber(PRICE_MIN, PRICE_MAX),
               'type': TYPE_BUILDING[getRandomNumber(0, 3)],
               'rooms': getRandomNumber(ROOMS_MIN, ROOMS_MAX),
@@ -53,8 +55,8 @@
               'photos': getRandomLength(PHOTOS)
             },
             'location': {
-              'x': getRandomNumber(LOWEST_X, offsetWidth),
-              'y': getRandomNumber(LOWEST_Y, HIGHEST_Y)
+              'x': locationX,
+              'y': locationY
             }
           }
       );

@@ -11,7 +11,6 @@
     pins.style.top = pin.location.y + 'px';
     pins.querySelector('img').src = pin.author.avatar;
     pins.querySelector('img').alt = pin.offer.title;
-
     pins.addEventListener('click', function (evt) {
       evt.preventDefault();
       window.card.closePopupCard();
