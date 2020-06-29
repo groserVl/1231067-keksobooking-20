@@ -2,8 +2,6 @@
 
 (function () {
 
-  var MAP_PIN_X = 570;
-  var MAP_PIN_Y = 375;
   var PIN_WIDTH = 62;
   var PIN_HEIGHT = 84;
 
@@ -37,18 +35,17 @@
   };
 
   // Заполнение поле адреса в форме
-  var getAddressForm = function () {
+  var getAddressForm = function (mapPinX, mapPinY) {
     var x;
     var y;
     if ((map.classList.contains('map--faded'))) {
-      x = MAP_PIN_X + PIN_WIDTH / 2;
-      y = MAP_PIN_Y + PIN_WIDTH / 2;
+      x = parseInt(mapPinX, 10) + PIN_WIDTH / 2;
+      y = parseInt(mapPinY, 10) + PIN_WIDTH / 2;
     } else {
-      x = MAP_PIN_X + PIN_WIDTH / 2;
-      y = MAP_PIN_Y + PIN_HEIGHT;
+      x = parseInt(mapPinX, 10) + PIN_WIDTH / 2;
+      y = parseInt(mapPinY, 10) + PIN_HEIGHT;
     }
     var locationXY = x + ' ' + y;
-
     return locationXY;
   };
 
