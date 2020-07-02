@@ -20,15 +20,6 @@
     return pins;
   };
 
-  // var renderAds = function (arr) {
-  //   var fragment = document.createDocumentFragment();
-  //   for (var i = 0; i < arr.length; i++) {
-  //     fragment.appendChild(renderPins(arr[i]));
-  //   }
-  //   mapPins.appendChild(fragment);
-  //   return mapPins;
-  // };
-
   // Функция коллбэк успешной загрузки
   var onSuccessLoad = function (arr) {
     var fragment = document.createDocumentFragment();
@@ -55,7 +46,6 @@
   };
 
   window.pin = {
-    // renderAds: renderAds
     onSuccessLoad: onSuccessLoad,
     onErrorLoad: onErrorLoad
   };

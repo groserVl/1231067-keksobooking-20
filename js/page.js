@@ -1,8 +1,6 @@
 'use strict';
 
 (function () {
-
-  // var NUMBER_ADS = 8;
   var MAP_PIN_X = 570;
   var MAP_PIN_Y = 375;
 
@@ -40,7 +38,6 @@
     for (i = 0; i < mapFilter.length; i++) {
       mapFilter[i].removeAttribute('disabled', '');
     }
-    // window.pin.renderAds(window.data.creatMockAds(NUMBER_ADS));
     window.backend.load(window.pin.onSuccessLoad, window.pin.onErrorLoad);
     inputAddressForm.value = window.form.getAddressForm(MAP_PIN_X, MAP_PIN_Y);
     window.form.disableCapacityElements();
