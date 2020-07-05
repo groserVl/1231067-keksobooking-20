@@ -15,6 +15,8 @@
 
   // Функция неактивного состояния страницы
   var deactivePage = function () {
+    map.classList.add('map--faded');
+    adForm.classList.add('ad-form--disabled');
     adFormHeader.setAttribute('disabled', '');
     mapFeatures.setAttribute('disabled', '');
     for (var i = 0; i < adFormElement.length; i++) {
@@ -24,6 +26,7 @@
       mapFilter[i].setAttribute('disabled', '');
     }
     inputAddressForm.value = window.form.getAddressForm(MAP_PIN_X, MAP_PIN_Y);
+    window.form.removeListener();
   };
 
   // Функция активного состояния страницы
@@ -42,6 +45,7 @@
     inputAddressForm.value = window.form.getAddressForm(MAP_PIN_X, MAP_PIN_Y);
     window.form.disableCapacityElements();
     window.form.plugListener();
+
     mapPinMain.removeEventListener('mousedown', onMapPinMousedown);
     mapPinMain.removeEventListener('keydown', onMapPinKeyEnter);
   };
@@ -64,5 +68,11 @@
   mapPinMain.addEventListener('keydown', onMapPinKeyEnter);
 
   deactivePage();
+
+  window.page = {
+    deactivePage: deactivePage,
+    onMapPinMousedown: onMapPinMousedown,
+    onMapPinKeyEnter: onMapPinKeyEnter,
+  };
 
 })();

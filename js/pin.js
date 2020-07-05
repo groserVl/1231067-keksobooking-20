@@ -47,7 +47,7 @@
 
   window.pin = {
     onSuccessLoad: onSuccessLoad,
-    onErrorLoad: onErrorLoad
+    onErrorLoad: onErrorLoad,
   };
 
 })();
