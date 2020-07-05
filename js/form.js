@@ -164,8 +164,8 @@
     removePins();
     adForm.reset();
     inputAddressForm.value = getAddressForm(MAP_PIN_X, MAP_PIN_Y);
-    mapPinMain.style.left = 570 + 'px';
-    mapPinMain.style.top = 375 + 'px';
+    mapPinMain.style.left = MAP_PIN_X + 'px';
+    mapPinMain.style.top = MAP_PIN_Y + 'px';
 
     mapPinMain.addEventListener('mousedown', window.page.onMapPinMousedown);
     mapPinMain.addEventListener('keydown', window.page.onMapPinKeyEnter);
@@ -190,7 +190,7 @@
     errorButton.focus();
 
     document.addEventListener('keydown', onEscKeydown);
-    document.addEventListener('click', onErrorClick);
+    errorTemplate.addEventListener('click', onErrorClick);
     errorButton.addEventListener('click', onErrorButtonClick);
   };
 
@@ -199,7 +199,7 @@
     successTemplate.remove();
 
     document.removeEventListener('keydown', onEscSuccessKeydown);
-    document.removeEventListener('click', onSuccessClick);
+    errorTemplate.removeEventListener('click', onSuccessClick);
   };
 
   // Функция закрытия окна ошибки
@@ -207,7 +207,7 @@
     errorTemplate.remove();
 
     document.removeEventListener('keydown', onEscKeydown);
-    document.removeEventListener('click', onErrorClick);
+    errorTemplate.removeEventListener('click', onErrorClick);
   };
 
   // Фунции обработчики зыкрытия окна успешной отправки формы
@@ -250,7 +250,9 @@
     getAddressForm: getAddressForm,
     disableCapacityElements: disableCapacityElements,
     plugListener: plugListener,
-    removeListener: removeListener
+    removeListener: removeListener,
+    onErrorSend: onErrorSend,
+    resetAdForm: resetAdForm
   };
 
 })();
