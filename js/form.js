@@ -4,9 +4,12 @@
 
   var PIN_WIDTH = 62;
   var PIN_HEIGHT = 84;
+  var MAP_PIN_X = 570;
+  var MAP_PIN_Y = 375;
 
   var adForm = document.querySelector('.ad-form');
   var map = document.querySelector('.map');
+  var mapPinMain = document.querySelector('.map__pin--main');
   var titleAdForm = adForm.querySelector('#title');
   var capacityForm = adForm.querySelector('#capacity');
   var roomNumberForm = adForm.querySelector('#room_number');
@@ -14,7 +17,13 @@
   var pricesForm = adForm.querySelector('#price');
   var adFormTimein = document.querySelector('#timein');
   var adFormTimeout = document.querySelector('#timeout');
+  var inputAddressForm = adForm.querySelector('#address');
   var timeEntryAndExit = adForm.querySelector('.ad-form__element--time');
+  var adFormReset = adForm.querySelector('.ad-form__reset');
+  var main = document.querySelector('main');
+  var successTemplate = document.querySelector('#success').content.querySelector('.success');
+  var errorTemplate = document.querySelector('#error').content.querySelector('.error');
+  var errorButton = errorTemplate.querySelector('.error__button');
 
   // Минимальная цена типов жилья
   var minPricesOfTypes = {
@@ -24,7 +33,7 @@
     palace: 10000,
   };
 
-  // Функция подключения обработчиков для валидации формы
+  // Функция подключения обработчиков
   var plugListener = function () {
     adForm.addEventListener('submit', onAdFormSubmit);
     titleAdForm.addEventListener('input', onTitleFormInput);
@@ -32,6 +41,18 @@
     roomNumberForm.addEventListener('change', onCapacityFormChange);
     typeForm.addEventListener('change', onTypeFormChange);
     timeEntryAndExit.addEventListener('change', onFormElementTimeChange);
+    adFormReset.addEventListener('click', onAdFormReset);
+  };
+
+  // Функция отключение обработчиков
+  var removeListener = function () {
+    adForm.removeEventListener('submit', onAdFormSubmit);
+    titleAdForm.removeEventListener('input', onTitleFormInput);
+    capacityForm.removeEventListener('change', onCapacityFormChange);
+    roomNumberForm.removeEventListener('change', onCapacityFormChange);
+    typeForm.removeEventListener('change', onTypeFormChange);
+    timeEntryAndExit.removeEventListener('change', onFormElementTimeChange);
+    adFormReset.removeEventListener('click', onAdFormReset);
   };
 
   // Заполнение поле адреса в форме
@@ -115,11 +136,6 @@
     setMinPricesOfTypes();
   };
 
-  var onAdFormSubmit = function (evt) {
-    evt.preventDefault();
-    adForm.submit();
-  };
-
   // Функция установки минимальных цен
   var setMinPricesOfTypes = function () {
     pricesForm.min = pricesForm.placeholder = minPricesOfTypes[typeForm.value];
@@ -134,10 +150,109 @@
     }
   };
 
+  // Функция убирает пины с карты
+  var removePins = function () {
+    var pinsAds = document.querySelectorAll('.map__pin:not(.map__pin--main)');
+    pinsAds.forEach(function (item) {
+      item.remove();
+    });
+  };
+
+  // Функция сброса и диактивирующая страницу
+  var resetAdForm = function () {
+    window.page.deactivePage();
+    removePins();
+    adForm.reset();
+    inputAddressForm.value = getAddressForm(MAP_PIN_X, MAP_PIN_Y);
+    mapPinMain.style.left = MAP_PIN_X + 'px';
+    mapPinMain.style.top = MAP_PIN_Y + 'px';
+
+    mapPinMain.addEventListener('mousedown', window.page.onMapPinMousedown);
+    mapPinMain.addEventListener('keydown', window.page.onMapPinKeyEnter);
+
+    document.addEventListener('keydown', onEscSuccessKeydown);
+    document.addEventListener('click', onSuccessClick);
+  };
+
+  // Функция коллбэк успешной отправки формы
+  var onSuccessSend = function () {
+    main.appendChild(successTemplate);
+    resetAdForm();
+  };
+
+  var onAdFormReset = function () {
+    resetAdForm();
+  };
+
+  // Функция коллбэк ошибочной отправки формы
+  var onErrorSend = function () {
+    main.appendChild(errorTemplate);
+    errorButton.focus();
+
+    document.addEventListener('keydown', onEscKeydown);
+    errorTemplate.addEventListener('click', onErrorClick);
+    errorButton.addEventListener('click', onErrorButtonClick);
+  };
+
+  //  Функция закрытия окна успешной отправки формы
+  var closeSuccessTemplate = function () {
+    successTemplate.remove();
+
+    document.removeEventListener('keydown', onEscSuccessKeydown);
+    errorTemplate.removeEventListener('click', onSuccessClick);
+  };
+
+  // Функция закрытия окна ошибки
+  var closeErrorTemplate = function () {
+    errorTemplate.remove();
+
+    document.removeEventListener('keydown', onEscKeydown);
+    errorTemplate.removeEventListener('click', onErrorClick);
+  };
+
+  // Фунции обработчики зыкрытия окна успешной отправки формы
+  var onEscSuccessKeydown = function (evt) {
+    if (evt.key === 'Escape') {
+      closeSuccessTemplate();
+    }
+  };
+
+  var onSuccessClick = function () {
+    if (successTemplate) {
+      closeSuccessTemplate();
+    }
+  };
+
+  // Фунции обработчики зыкрытия окна ошибки
+  var onEscKeydown = function (evt) {
+    if (evt.key === 'Escape') {
+      closeErrorTemplate();
+    }
+  };
+
+  var onErrorClick = function () {
+    if (errorTemplate) {
+      closeErrorTemplate();
+    }
+  };
+
+  var onErrorButtonClick = function () {
+    closeErrorTemplate();
+  };
+
+  // Функция отправляющая форму объявления
+  var onAdFormSubmit = function (evt) {
+    evt.preventDefault();
+    window.backend.upload(new FormData(adForm), onSuccessSend, onErrorSend);
+  };
+
   window.form = {
     getAddressForm: getAddressForm,
     disableCapacityElements: disableCapacityElements,
-    plugListener: plugListener
+    plugListener: plugListener,
+    removeListener: removeListener,
+    onErrorSend: onErrorSend,
+    resetAdForm: resetAdForm
   };
 
 })();

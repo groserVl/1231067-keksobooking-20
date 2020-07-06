@@ -31,23 +31,14 @@
   };
 
   // Функция коллбэк ошибка загрузки
-  var onErrorLoad = function (errorMessage) {
-    var nodeElemetn = document.createElement('div');
-    nodeElemetn.classList.add('error-load-message');
-    nodeElemetn.style = 'z-index: 100; margin: 0 auto; padding: 10px 0; color: #fff; text-align: center; background-color: tomato;';
-    nodeElemetn.style.position = 'fixed';
-    nodeElemetn.style.width = '100%';
-    nodeElemetn.style.left = 0;
-    nodeElemetn.style.right = 0;
-    nodeElemetn.style.fontSize = '40px';
-
-    nodeElemetn.textContent = errorMessage;
-    document.body.insertAdjacentElement('beforebegin', nodeElemetn);
+  var onErrorLoad = function () {
+    window.form.onErrorSend();
+    window.form.resetAdForm();
   };
 
   window.pin = {
     onSuccessLoad: onSuccessLoad,
-    onErrorLoad: onErrorLoad
+    onErrorLoad: onErrorLoad,
   };
 
 })();

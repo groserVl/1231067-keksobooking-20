@@ -38,7 +38,7 @@
           mapPinMain.style.left = (mapPinMain.offsetLeft - shift.x) + 'px';
         }
 
-        if (mapPinMain.offsetTop - shift.y < HIGHEST_Y - PIN_HEIGHT && mapPinMain.offsetTop - shift.y > LOWEST_Y - PIN_HEIGHT) {
+        if (mapPinMain.offsetTop - shift.y <= HIGHEST_Y - PIN_HEIGHT && mapPinMain.offsetTop - shift.y >= LOWEST_Y - PIN_HEIGHT) {
 
           mapPinMain.style.top = (mapPinMain.offsetTop - shift.y) + 'px';
         }
