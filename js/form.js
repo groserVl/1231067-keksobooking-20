@@ -34,7 +34,7 @@
   };
 
   // Функция подключения обработчиков
-  var plugListener = function () {
+  var plugListenerForm = function () {
     adForm.addEventListener('submit', onAdFormSubmit);
     titleAdForm.addEventListener('input', onTitleFormInput);
     capacityForm.addEventListener('change', onCapacityFormChange);
@@ -171,7 +171,7 @@
     mapPinMain.addEventListener('keydown', window.page.onMapPinKeyEnter);
 
     document.addEventListener('keydown', onEscSuccessKeydown);
-    document.addEventListener('click', onSuccessClick);
+    successTemplate.addEventListener('click', onSuccessClick);
   };
 
   // Функция коллбэк успешной отправки формы
@@ -249,10 +249,11 @@
   window.form = {
     getAddressForm: getAddressForm,
     disableCapacityElements: disableCapacityElements,
-    plugListener: plugListener,
+    plugListenerForm: plugListenerForm,
     removeListener: removeListener,
     onErrorSend: onErrorSend,
-    resetAdForm: resetAdForm
+    resetAdForm: resetAdForm,
+    removePins: removePins
   };
 
 })();
