@@ -28,7 +28,6 @@
     }
     inputAddressForm.value = window.form.getAddressForm(MAP_PIN_X, MAP_PIN_Y);
     window.form.removeListener();
-    mapFilters.removeEventListener('change', window.pin.onMapFiltersChange);
   };
 
   // Функция активного состояния страницы
@@ -47,7 +46,8 @@
     inputAddressForm.value = window.form.getAddressForm(MAP_PIN_X, MAP_PIN_Y);
     window.form.disableCapacityElements();
     window.form.plugListenerForm();
-    mapFilters.addEventListener('change', window.pin.onMapFiltersChange);
+    mapFilters.addEventListener('change', window.debounce(window.pin.onMapFiltersChange));
+
     mapPinMain.removeEventListener('mousedown', onMapPinMousedown);
     mapPinMain.removeEventListener('keydown', onMapPinKeyEnter);
   };
