@@ -70,9 +70,18 @@
     imagesForm.removeEventListener('change', onImagesChange);
   };
 
+  // Функция востановления картинок по умолчанию
+  var resetImages = function () {
+    avatarPreview.src = 'img/muffin-grey.svg';
+    while (photoPreview.firstChild) {
+      photoPreview.removeChild(photoPreview.firstChild);
+    }
+  };
+
   window.load = {
     loadImagesListener: loadImagesListener,
-    removeImagesListener: removeImagesListener
+    removeImagesListener: removeImagesListener,
+    resetImages: resetImages
   };
 
 })();

@@ -161,6 +161,8 @@
   // Функция сброса и диактивирующая страницу
   var resetAdForm = function () {
     window.page.deactivePage();
+    window.card.closePopupCard();
+    window.load.resetImages();
     removePins();
     adForm.reset();
     inputAddressForm.value = getAddressForm(MAP_PIN_X, MAP_PIN_Y);
