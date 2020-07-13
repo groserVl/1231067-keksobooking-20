@@ -169,15 +169,15 @@
 
     mapPinMain.addEventListener('mousedown', window.page.onMapPinMousedown);
     mapPinMain.addEventListener('keydown', window.page.onMapPinKeyEnter);
-
-    document.addEventListener('keydown', onEscSuccessKeydown);
-    successTemplate.addEventListener('click', onSuccessClick);
   };
 
   // Функция коллбэк успешной отправки формы
   var onSuccessSend = function () {
     main.appendChild(successTemplate);
     resetAdForm();
+
+    document.addEventListener('keydown', onEscSuccessKeydown);
+    successTemplate.addEventListener('click', onSuccessClick);
   };
 
   var onAdFormReset = function () {
@@ -199,7 +199,7 @@
     successTemplate.remove();
 
     document.removeEventListener('keydown', onEscSuccessKeydown);
-    errorTemplate.removeEventListener('click', onSuccessClick);
+    successTemplate.removeEventListener('click', onSuccessClick);
   };
 
   // Функция закрытия окна ошибки
