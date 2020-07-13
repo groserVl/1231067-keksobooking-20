@@ -161,6 +161,8 @@
   // Функция сброса и диактивирующая страницу
   var resetAdForm = function () {
     window.page.deactivePage();
+    window.card.closePopupCard();
+    window.load.resetImages();
     removePins();
     adForm.reset();
     inputAddressForm.value = getAddressForm(MAP_PIN_X, MAP_PIN_Y);
@@ -169,15 +171,15 @@
 
     mapPinMain.addEventListener('mousedown', window.page.onMapPinMousedown);
     mapPinMain.addEventListener('keydown', window.page.onMapPinKeyEnter);
-
-    document.addEventListener('keydown', onEscSuccessKeydown);
-    successTemplate.addEventListener('click', onSuccessClick);
   };
 
   // Функция коллбэк успешной отправки формы
   var onSuccessSend = function () {
     main.appendChild(successTemplate);
     resetAdForm();
+
+    document.addEventListener('keydown', onEscSuccessKeydown);
+    successTemplate.addEventListener('click', onSuccessClick);
   };
 
   var onAdFormReset = function () {
@@ -199,7 +201,7 @@
     successTemplate.remove();
 
     document.removeEventListener('keydown', onEscSuccessKeydown);
-    errorTemplate.removeEventListener('click', onSuccessClick);
+    successTemplate.removeEventListener('click', onSuccessClick);
   };
 
   // Функция закрытия окна ошибки
