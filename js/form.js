@@ -36,7 +36,7 @@
   };
 
   // Функция подключения обработчиков
-  var plugListenerForm = function () {
+  var addFormListeners = function () {
     adForm.addEventListener('submit', onAdFormSubmit);
     titleAdForm.addEventListener('input', onTitleFormInput);
     capacityForm.addEventListener('change', onCapacityFormChange);
@@ -47,7 +47,7 @@
   };
 
   // Функция отключение обработчиков
-  var removeListener = function () {
+  var removeFormListeners = function () {
     adForm.removeEventListener('submit', onAdFormSubmit);
     titleAdForm.removeEventListener('input', onTitleFormInput);
     capacityForm.removeEventListener('change', onCapacityFormChange);
@@ -253,8 +253,8 @@
   window.form = {
     getAddressForm: getAddressForm,
     disableCapacityElements: disableCapacityElements,
-    plugListenerForm: plugListenerForm,
-    removeListener: removeListener,
+    addFormListeners: addFormListeners,
+    removeFormListeners: removeFormListeners,
     onErrorSend: onErrorSend,
     resetAdForm: resetAdForm,
     removePins: removePins

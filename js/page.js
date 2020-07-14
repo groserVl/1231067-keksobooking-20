@@ -9,7 +9,7 @@
   var map = document.querySelector('.map');
   var mapFilters = document.querySelector('.map__filters');
   var adFormHeader = document.querySelector('.ad-form-header');
-  var adFormElement = document.querySelectorAll('.ad-form__element');
+  var adFormField = document.querySelectorAll('.ad-form__element');
   var mapFilter = document.querySelectorAll('.map__filter');
   var mapFeatures = document.querySelector('.map__features');
   var inputAddressForm = adForm.querySelector('#address');
@@ -20,14 +20,14 @@
     adForm.classList.add('ad-form--disabled');
     adFormHeader.setAttribute('disabled', '');
     mapFeatures.setAttribute('disabled', '');
-    adFormElement.forEach(function (item) {
+    adFormField.forEach(function (item) {
       item.setAttribute('disabled', '');
     });
     mapFilter.forEach(function (item) {
       item.setAttribute('disabled', '');
     });
     inputAddressForm.value = window.form.getAddressForm(MAP_PIN_X, MAP_PIN_Y);
-    window.form.removeListener();
+    window.form.removeFormListeners();
     window.load.removeImagesListener();
   };
 
@@ -37,16 +37,16 @@
     adForm.classList.remove('ad-form--disabled');
     adFormHeader.removeAttribute('disabled', '');
     mapFeatures.removeAttribute('disabled', '');
-    for (var i = 0; i < adFormElement.length; i++) {
-      adFormElement[i].removeAttribute('disabled', '');
-    }
-    for (i = 0; i < mapFilter.length; i++) {
-      mapFilter[i].removeAttribute('disabled', '');
-    }
+    adFormField.forEach(function (item) {
+      item.removeAttribute('disabled', '');
+    });
+    mapFilter.forEach(function (item) {
+      item.removeAttribute('disabled', '');
+    });
     window.backend.load(window.pin.onSuccessLoad, window.pin.onErrorLoad);
     inputAddressForm.value = window.form.getAddressForm(MAP_PIN_X, MAP_PIN_Y);
     window.form.disableCapacityElements();
-    window.form.plugListenerForm();
+    window.form.addFormListeners();
     window.load.loadImagesListener();
     mapFilters.addEventListener('change', window.debounce(window.pin.onMapFiltersChange));
 

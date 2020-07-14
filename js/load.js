@@ -48,12 +48,12 @@
       var reader = new FileReader();
 
       reader.addEventListener('load', function () {
-        var photoElement = document.createElement('img');
-        photoElement.width = WIDTH_PHOTO_PREVIEW;
-        photoElement.height = HEIGHT_PHOTO_PREVIEW;
-        photoElement.alt = 'Фото жилища';
-        photoElement.src = reader.result;
-        photoPreview.appendChild(photoElement);
+        var photo = document.createElement('img');
+        photo.width = WIDTH_PHOTO_PREVIEW;
+        photo.height = HEIGHT_PHOTO_PREVIEW;
+        photo.alt = 'Фото жилища';
+        photo.src = reader.result;
+        photoPreview.appendChild(photo);
       });
 
       reader.readAsDataURL(file);
