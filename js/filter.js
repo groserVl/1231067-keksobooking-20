@@ -96,8 +96,8 @@
     filterData = filterFeatures(filterData);
 
     window.form.removePins();
-    window.card.closePopupCard();
-    window.pin.render(filterData);
+    window.card.closePopup();
+    window.pin.renderAds(filterData);
   };
 
   window.filter = {

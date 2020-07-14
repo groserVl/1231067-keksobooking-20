@@ -15,15 +15,15 @@
     pins.querySelector('img').alt = pin.offer.title;
     pins.addEventListener('click', function (evt) {
       evt.preventDefault();
-      window.card.closePopupCard();
-      window.card.renderCards(pin);
+      window.card.closePopup();
+      window.card.render(pin);
       document.addEventListener('keydown', window.card.onPopupCloseKeydown);
     });
     return pins;
   };
 
   var arrayAds = [];
-  var render = function (arr) {
+  var renderAds = function (arr) {
     var fragment = document.createDocumentFragment();
     var length = arr.length < MAX_NUMBER_ADS ? arr.length : MAX_NUMBER_ADS;
     for (var i = 0; i < length; i++) {
@@ -35,7 +35,7 @@
 
   var onSuccessLoad = function (data) {
     arrayAds = data;
-    render(arrayAds);
+    renderAds(arrayAds);
   };
 
   var onMapFiltersChange = function () {
@@ -51,7 +51,7 @@
   window.pin = {
     onSuccessLoad: onSuccessLoad,
     onErrorLoad: onErrorLoad,
-    render: render,
+    renderAds: renderAds,
     onMapFiltersChange: onMapFiltersChange
   };
 

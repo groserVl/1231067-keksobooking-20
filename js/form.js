@@ -6,6 +6,8 @@
   var PIN_HEIGHT = 84;
   var MAP_PIN_X = 570;
   var MAP_PIN_Y = 375;
+  var MIN_LENGTH_TEXT = 30;
+  var MAX_LENGTH_TEXT = 100;
 
   var adForm = document.querySelector('.ad-form');
   var map = document.querySelector('.map');
@@ -120,12 +122,12 @@
     if (evt.target.value.length === 0) {
       visualizeInvalidTitle(evt);
       evt.target.setCustomValidity('Поле должно быть заполнено');
-    } else if (evt.target.value.length < 30) {
+    } else if (evt.target.value.length < MIN_LENGTH_TEXT) {
       visualizeInvalidTitle(evt);
-      evt.target.setCustomValidity('Нужно еще ' + (30 - evt.target.value.length) + ' символов');
-    } else if (evt.target.value.length > 100) {
+      evt.target.setCustomValidity('Нужно еще ' + (MIN_LENGTH_TEXT - evt.target.value.length) + ' символов');
+    } else if (evt.target.value.length > MAX_LENGTH_TEXT) {
       visualizeInvalidTitle(evt);
-      evt.target.setCustomValidity('Удалите ' + (evt.target.value.length - 100) + ' символов');
+      evt.target.setCustomValidity('Удалите ' + (evt.target.value.length - MAX_LENGTH_TEXT) + ' символов');
     } else {
       evt.target.setCustomValidity('');
       evt.target.style.border = 'none';
@@ -161,7 +163,7 @@
   // Функция сброса и диактивирующая страницу
   var resetAdForm = function () {
     window.page.deactivePage();
-    window.card.closePopupCard();
+    window.card.closePopup();
     window.load.resetImages();
     removePins();
     adForm.reset();
