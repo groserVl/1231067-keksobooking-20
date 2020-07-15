@@ -67,7 +67,13 @@
     document.removeEventListener('keydown', onPopupCloseKeydown);
   };
 
-  var onPopupCloseKeydown = function () {
+  var onPopupCloseKeydown = function (evt) {
+    if (evt.key === 'Escape') {
+      closePopup();
+    }
+  };
+
+  var onPopupCloseClick = function () {
     closePopup();
   };
 
@@ -88,7 +94,7 @@
     cardAds.querySelector('.popup__description').textContent = card.offer.description;
     getPhotos(cardAds.querySelector('.popup__photos'), card.offer.photos);
     cardAds.querySelector('.popup__avatar').src = card.author.avatar;
-    popupClose.addEventListener('click', onPopupCloseKeydown);
+    popupClose.addEventListener('click', onPopupCloseClick);
 
     return cardAds;
   };

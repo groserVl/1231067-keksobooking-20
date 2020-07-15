@@ -24,19 +24,24 @@
 
   //  Функция фильтрации цен на жильё
   var filterHousingPrice = function (arr) {
+    var price = {
+      low: 'low',
+      middle: 'middle',
+      high: 'high'
+    };
     if (housingPrice.value !== 'any') {
       switch (housingPrice.value) {
-        case 'low':
+        case price.low:
           arr = arr.filter(function (item) {
             return item.offer.price < HOUSING_PRICE_LOW;
           });
           break;
-        case 'middle':
+        case price.middle:
           arr = arr.filter(function (item) {
             return item.offer.price <= HOUSING_PRICE_TOP && item.offer.price >= HOUSING_PRICE_LOW;
           });
           break;
-        case 'high':
+        case price.high:
           arr = arr.filter(function (item) {
             return item.offer.price > HOUSING_PRICE_TOP;
           });
