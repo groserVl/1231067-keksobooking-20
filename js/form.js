@@ -39,7 +39,6 @@
   var addFormListeners = function () {
     adForm.addEventListener('submit', onAdFormSubmit);
     titleAdForm.addEventListener('input', onTitleFormInput);
-    capacityForm.addEventListener('change', onCapacityFormChange);
     roomNumberForm.addEventListener('change', onCapacityFormChange);
     typeForm.addEventListener('change', onTypeFormChange);
     timeEntryAndExit.addEventListener('change', onFormElementTimeChange);
@@ -50,7 +49,6 @@
   var removeFormListeners = function () {
     adForm.removeEventListener('submit', onAdFormSubmit);
     titleAdForm.removeEventListener('input', onTitleFormInput);
-    capacityForm.removeEventListener('change', onCapacityFormChange);
     roomNumberForm.removeEventListener('change', onCapacityFormChange);
     typeForm.removeEventListener('change', onTypeFormChange);
     timeEntryAndExit.removeEventListener('change', onFormElementTimeChange);
@@ -162,7 +160,7 @@
 
   // Функция сброса и диактивирующая страницу
   var resetAdForm = function () {
-    window.page.deactivePage();
+    window.page.deactivatePage();
     window.card.closePopup();
     window.load.resetImages();
     removePins();

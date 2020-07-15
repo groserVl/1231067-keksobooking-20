@@ -15,7 +15,7 @@
   var inputAddressForm = adForm.querySelector('#address');
 
   // Функция неактивного состояния страницы
-  var deactivePage = function () {
+  var deactivatePage = function () {
     map.classList.add('map--faded');
     adForm.classList.add('ad-form--disabled');
     adFormHeader.setAttribute('disabled', '');
@@ -32,7 +32,7 @@
   };
 
   // Функция активного состояния страницы
-  var activePage = function () {
+  var activatePage = function () {
     map.classList.remove('map--faded');
     adForm.classList.remove('ad-form--disabled');
     adFormHeader.removeAttribute('disabled', '');
@@ -57,13 +57,13 @@
   // Функции - обработчик
   var onMapPinMousedown = function (evt) {
     if (evt.button === 0) {
-      activePage();
+      activatePage();
     }
   };
 
   var onMapPinKeyEnter = function (evt) {
     if (evt.key === 'Enter') {
-      activePage();
+      activatePage();
     }
   };
 
@@ -71,10 +71,10 @@
   mapPinMain.addEventListener('mousedown', onMapPinMousedown);
   mapPinMain.addEventListener('keydown', onMapPinKeyEnter);
   mapPinMain.focus();
-  deactivePage();
+  deactivatePage();
 
   window.page = {
-    deactivePage: deactivePage,
+    deactivatePage: deactivatePage,
     onMapPinMousedown: onMapPinMousedown,
     onMapPinKeyEnter: onMapPinKeyEnter,
   };
