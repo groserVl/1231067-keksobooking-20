@@ -138,7 +138,8 @@
 
   // Функция установки минимальных цен
   var setMinPricesOfTypes = function () {
-    pricesForm.min = pricesForm.placeholder = minPricesOfTypes[typeForm.value];
+    pricesForm.min = minPricesOfTypes[typeForm.value];
+    pricesForm.placeholder = minPricesOfTypes[typeForm.value];
   };
 
   //  Функция валидации времени заезда и выезда
@@ -165,7 +166,8 @@
     window.load.resetImages();
     removePins();
     adForm.reset();
-    pricesForm.min = pricesForm.placeholder = minPricesOfTypes[typeForm.value];
+    pricesForm.min = minPricesOfTypes[typeForm.value];
+    pricesForm.placeholder = minPricesOfTypes[typeForm.value];
     inputAddressForm.value = getAddressForm(MAP_PIN_X, MAP_PIN_Y);
     mapPinMain.style.left = MAP_PIN_X + 'px';
     mapPinMain.style.top = MAP_PIN_Y + 'px';
